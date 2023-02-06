@@ -3,7 +3,7 @@ const popup = document.querySelector('.popup');
 const textInput = document.querySelector('.form-input');
 const btnInput = document.querySelector('.form');
 
-const link = 'https://api.openweathermap.org/data/2.5/weather?&appid=8379da078b2e9f6b46beec17eb0c2c7e';
+const link = 'https://api.openweathermap.org/data/2.5/weather?&appid=8379da078b2e9f6b46beec17eb0c2c7e'; // api
 
 let store = {
     temp: 0,
@@ -19,10 +19,10 @@ let store = {
         tempMax: {}
     },
     
-};
+}; // наша база
 
 
-const fetchData = async () => {
+const fetchData = async () => { // запрос
     const result = await fetch(`${link}&q=${store.name}`);
     const data = await result.json();
     
@@ -45,7 +45,7 @@ const fetchData = async () => {
             }
         ]
 
-    } = data; // диструктуризация обьекта
+    } = data; // диструктуризация главного обьекта
 
     
     store = {
@@ -65,12 +65,11 @@ const fetchData = async () => {
                feelsLike: `${Math.round(feelsLike - 273)} °`,
             },
     };
-
     renderContent();
 };
 
 
-
+// Функция для вывода icon под погоду
 const getMainWeather = (weather) => {
     return Object.values(weather).map(({main}) => {
         if(main.includes("Clouds")){
@@ -92,10 +91,9 @@ const getMainWeather = (weather) => {
             return '01d@2x.png';
         }
     });
-
-   
 };
 
+// Рендер контента
 const renderProperty = (properties ) => {
     const {tempMax, visibility, speed, feelsLike} = properties;
 
@@ -118,8 +116,9 @@ const renderProperty = (properties ) => {
                 </div>
             </div>`;
 };
-const markup = () => {
 
+// Рендер контента
+const markup = () => {
     const {
         name,
         temp,
@@ -158,9 +157,12 @@ const removeClassPops = () => {
     popup.classList.remove('active');
 };
 
+
+// Функция которая рендерит контент 
 const renderContent = () => {
     app.innerHTML = markup();
 
+    // Обработчик события
     const citi = document.querySelector('.weather__title-citi');
     const close = document.querySelector('.popup-close__img');
     citi.addEventListener('click', addClassPops);
